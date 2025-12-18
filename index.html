@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dalia Mukherjee | Data Analyst Portfolio</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary: #00d2ff;
+        --secondary: #3a7bd5;
+        --accent: #7f00ff;
+        --dark: #0f172a;
+        --light: #f8fafc;
+        --glass: rgba(255, 255, 255, 0.05);
+        --border: rgba(255, 255, 255, 0.1);
+        --card-width: 300px; /* Width for slider cards */
+        --card-margin: 20px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background-color: var(--dark);
+        color: var(--light);
+        overflow-x: hidden;
+      }
+
+      /* --- Animated Background Shapes --- */
+      .background-shapes {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        overflow: hidden;
+      }
+
+      .shape {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(80px);
+        opacity: 0.6;
+        animation: float 10s infinite alternate;
+      }
+
+      .shape-1 {
+        width: 400px;
+        height: 400px;
+        background: var(--primary);
+        top: -10%;
+        left: -10%;
+      }
+      .shape-2 {
+        width: 300px;
+        height: 300px;
+        background: var(--accent);
+        bottom: 10%;
+        right: -5%;
+        animation-delay: -2s;
+      }
+      .shape-3 {
+        width: 200px;
+        height: 200px;
+        background: var(--secondary);
+        top: 40%;
+        left: 50%;
+        animation-delay: -4s;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translate(0, 0);
+        }
+        100% {
+          transform: translate(30px, 50px);
+        }
+      }
+
+      /* --- Layout --- */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      section {
+        padding: 80px 0;
+      }
+
+      h2 {
+        font-size: 2.5rem;
+        margin-bottom: 40px;
+        text-align: center;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      /* --- Header/Hero --- */
+      header {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .hero-content h1 {
+        font-size: 4rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+
+      .hero-content h3 {
+        font-size: 1.5rem;
+        color: var(--primary);
+        margin-bottom: 20px;
+      }
+
+      .hero-content p {
+        max-width: 600px;
+        margin: 0 auto 30px;
+        line-height: 1.6;
+        color: #cbd5e1;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 30px;
+        background: linear-gradient(45deg, var(--secondary), var(--accent));
+        color: white;
+        text-decoration: none;
+        border-radius: 30px;
+        font-weight: 600;
+        transition: transform 0.3s;
+        border: 1px solid var(--border);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+      }
+
+      /* --- Glass Cards General --- */
+      .card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 30px;
+        margin-bottom: 20px;
+        transition: transform 0.3s, border-color 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary);
+      }
+
+      /* --- INFINITE SLIDER STYLES (New) --- */
+      .slider-container {
+        height: 350px;
+        margin: auto;
+        position: relative;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+      }
+
+      /* Gradient masks to fade edges */
+      .slider-container::before,
+      .slider-container::after {
+        background: linear-gradient(
+          to right,
+          var(--dark) 0%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        content: "";
+        height: 100%;
+        position: absolute;
+        width: 100px;
+        z-index: 2;
+      }
+
+      .slider-container::after {
+        right: 0;
+        top: 0;
+        transform: rotateZ(180deg);
+      }
+
+      .slider-container::before {
+        left: 0;
+        top: 0;
+      }
+
+      .slide-track {
+        display: flex;
+        width: calc(
+          (var(--card-width) + var(--card-margin) * 2) * 10
+        ); /* 5 slides * 2 sets */
+        animation: scroll 30s linear infinite;
+      }
+
+      .slide-track:hover {
+        animation-play-state: paused;
+      }
+
+      .slide {
+        height: 280px;
+        width: var(--card-width);
+        margin: 0 var(--card-margin);
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        perspective: 100px;
+      }
+
+      .cert-card {
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 15px;
+        padding: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .cert-icon {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        background: linear-gradient(
+          to bottom,
+          var(--primary),
+          var(--secondary)
+        );
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      @keyframes scroll {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(
+            calc((var(--card-width) + var(--card-margin) * 2) * -5)
+          );
+        }
+      }
+
+      /* --- Skills Grid --- */
+      .skills-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .skill-item {
+        margin-bottom: 15px;
+      }
+      .skill-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      .progress-bar {
+        width: 100%;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+      }
+      .progress {
+        height: 100%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        width: 0;
+        transition: width 1.5s ease-in-out;
+      }
+
+      /* --- Projects Grid --- */
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+      }
+      .project-tags span {
+        display: inline-block;
+        font-size: 0.8rem;
+        padding: 4px 10px;
+        background: rgba(0, 210, 255, 0.1);
+        color: var(--primary);
+        border-radius: 15px;
+        margin-right: 5px;
+        margin-top: 10px;
+      }
+
+      /* --- Timeline --- */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .timeline::after {
+        content: "";
+        position: absolute;
+        width: 2px;
+        background: var(--border);
+        top: 0;
+        bottom: 0;
+        left: 20px;
+      }
+      .timeline-item {
+        padding: 10px 40px;
+        position: relative;
+        margin-bottom: 30px;
+      }
+      .timeline-item::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        right: auto;
+        left: 12px;
+        background-color: var(--dark);
+        border: 3px solid var(--primary);
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
+      /* --- Contact --- */
+      .contact-links {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-top: 30px;
+      }
+      .contact-icon {
+        font-size: 2rem;
+        color: var(--light);
+        transition: color 0.3s;
+      }
+      .contact-icon:hover {
+        color: var(--primary);
+      }
+
+      @media (max-width: 768px) {
+        .hero-content h1 {
+          font-size: 2.5rem;
+        }
+        .timeline::after {
+          left: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="background-shapes">
+      <div class="shape shape-1"></div>
+      <div class="shape shape-2"></div>
+      <div class="shape shape-3"></div>
+    </div>
+
+    <nav
+      style="
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+        z-index: 100;
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--border);
+      "
+    >
+      <div
+        class="container"
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        "
+      >
+        <div style="font-weight: 700; font-size: 1.2rem">DM.</div>
+        <div>
+          <a
+            href="mailto:daliamukherjee667@gmail.com"
+            class="btn"
+            style="padding: 8px 20px; font-size: 0.9rem"
+            >Hire Me</a
+          >
+        </div>
+      </div>
+    </nav>
+
+    <header>
+      <div class="container hero-content">
+        <img
+          src="photo.jpeg"
+          alt="Dalia Mukherjee"
+          style="
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary);
+            margin-bottom: 25px;
+            box-shadow: 0 0 25px rgba(0, 210, 255, 0.4);
+          "
+        />
+        <h1>Dalia Mukherjee</h1>
+        <h3>Entry-Level Data Analyst</h3>
+        <p>
+          Specializing in BI reporting, data cleaning, and analytics using Power
+          BI, Tableau, SQL, and Snowflake. I turn complex data into actionable
+          insights.
+        </p>
+        <div style="display: flex; justify-content: center; gap: 15px">
+          <span style="color: #ccc"
+            ><i class="fa-solid fa-location-dot"></i> Guwahati, Assam,
+            India</span
+          >
+        </div>
+      </div>
+    </header>
+
+    <section id="skills">
+      <div class="container">
+        <h2>Technical Skills</h2>
+        <div class="skills-grid">
+          <div class="card">
+            <h3 style="margin-bottom: 15px">
+              <i class="fa-solid fa-chart-simple"></i> Visualization
+            </h3>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span>Microsoft Power BI</span><span>95%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 95%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span>Tableau</span><span>90%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header"><span>Excel</span><span>85%</span></div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 85%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom: 15px">
+              <i class="fa-solid fa-code"></i> Technical
+            </h3>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span>SQL / MySQL</span><span>90%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 90%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span>Python (Pandas/NumPy)</span><span>85%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 85%"></div>
+              </div>
+            </div>
+            <div class="skill-item">
+              <div class="skill-header">
+                <span>Snowflake & AWS</span><span>75%</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress" style="width: 75%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2>Featured Projects</h2>
+        <div class="projects-grid">
+          <a
+            href="https://github.com/defnotdalia/PROD-PowerBI-Report"
+            target="_blank"
+            class="card project-card"
+          >
+            <div
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 15px;
+              "
+            >
+              <i class="fa-solid fa-industry"></i>
+            </div>
+            <h3>Production & Sales Analytics</h3>
+            <p style="margin: 10px 0; color: #ccc; font-size: 0.9rem">
+              Developed an End-to-End BI solution integrating data from MySQL
+              and SQL Server.
+            </p>
+            <div class="project-tags">
+              <span>Power BI</span>
+              <span>SQL Server</span>
+              <span>DAX</span>
+            </div>
+          </a>
+
+          <a
+            href="https://github.com/defnotdalia/snowflake_tableau"
+            target="_blank"
+            class="card project-card"
+          >
+            <div
+              style="font-size: 2rem; color: var(--accent); margin-bottom: 15px"
+            >
+              <i class="fa-solid fa-leaf"></i>
+            </div>
+            <h3>Global Energy Consumption</h3>
+            <p style="margin: 10px 0; color: #ccc; font-size: 0.9rem">
+              Designed a dashboard visualizing KWH usage and cost savings across
+              25 countries.
+            </p>
+            <div class="project-tags">
+              <span>Tableau</span>
+              <span>Snowflake</span>
+              <span>SQL</span>
+            </div>
+          </a>
+
+          <a
+            href="https://github.com/defnotdalia/Financial-Transaction-Analytics-PowerBI-AI"
+            target="_blank"
+            class="card project-card"
+          >
+            <div
+              style="
+                font-size: 2rem;
+                color: var(--primary);
+                margin-bottom: 15px;
+              "
+            >
+              <i class="fa-solid fa-coins"></i>
+            </div>
+            <h3>Financial Analytics</h3>
+            <p style="margin: 10px 0; color: #ccc; font-size: 0.9rem">
+              AI-Driven dashboard using SQL Joins to merge distinct tables.
+            </p>
+            <div class="project-tags">
+              <span>Power BI</span>
+              <span>AI</span>
+              <span>EDA</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section id="certifications" style="background: rgba(0, 0, 0, 0.1)">
+      <div class="container">
+        <h2>Certifications</h2>
+        <div class="slider-container">
+          <div class="slide-track">
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-chart-line cert-icon"></i>
+                <h4>Google Advanced Data Analytics</h4>
+
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Coursera
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-brands fa-python cert-icon"></i>
+                <h4>100 Days of Code: The Complete Python Pro Bootcamp</h4>
+
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Udemy (Dr. Angela Yu)
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-database cert-icon"></i>
+                <h4>Complete Data Analyst Bootcamp from Basics to Advanced</h4>
+
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Udemy (Krish Naik)
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-cloud cert-icon"></i>
+                <h4>Bridge Course on Cloud Solution Architect</h4>
+
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  NASSCOM
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-chart-column cert-icon"></i>
+                <h4>Data Visualization with Power BI</h4>
+
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Great Learning
+                </p>
+              </div>
+            </div>
+
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-chart-line cert-icon"></i>
+                <h4>Google Advanced Data Analytics</h4>
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Coursera
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-brands fa-python cert-icon"></i>
+                <h4>100Daysof Code: The Complete Python Pro Bootcamp</h4>
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Udemy (Dr. Angela Yu)
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-database cert-icon"></i>
+                <h4>Complete Data Analyst Bootcamp from Basics to Advanced</h4>
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Udemy (Krish Naik)
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-cloud cert-icon"></i>
+                <h4>Bridge Course on Cloud Solution Architect</h4>
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  NASSCOM
+                </p>
+              </div>
+            </div>
+            <div class="slide">
+              <div class="cert-card">
+                <i class="fa-solid fa-chart-column cert-icon"></i>
+                <h4>Data Visualization with Power BI</h4>
+                <p
+                  style="
+                    font-size: 0.8rem;
+                    color: var(--primary);
+                    margin-top: 5px;
+                  "
+                >
+                  Great Learning
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <h2>Experience</h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="card">
+              <small style="color: var(--primary)">Jun 2024 - Aug 2024</small>
+              <h3>Machine Learning Intern</h3>
+              <h4 style="color: #aaa">NIELIT</h4>
+              <p style="margin-top: 10px; font-size: 0.95rem">
+                • Preprocessed real estate data using Pandas/NumPy.<br />
+                • Achieved 92% accuracy benchmarking Linear, Ridge, and Lasso
+                regression models.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="card">
+              <small style="color: var(--secondary)">Virtual Experience</small>
+              <h3>GenAI Powered Data Analytics</h3>
+              <h4 style="color: #aaa">Tata (via Forage)</h4>
+              <p style="margin-top: 10px; font-size: 0.95rem">
+                Built delinquency prediction models analyzing 1,000+ records to
+                forecast late payments.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="card">
+              <small style="color: var(--secondary)">Virtual Experience</small>
+              <h3>Data Analytics</h3>
+              <h4 style="color: #aaa">Deloitte Australia (via Forage)</h4>
+              <p style="margin-top: 10px; font-size: 0.95rem">
+                Conducted forensic analysis on 500+ data points to isolate
+                critical anomalies.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" style="text-align: center">
+      <div class="container">
+        <h2>Education</h2>
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+          "
+        >
+          <div class="card" style="max-width: 400px; text-align: left">
+            <h3>B.Tech in Computer Science</h3>
+            <p style="color: var(--primary)">Assam University</p>
+            <p>Nov 2021 - Aug 2025</p>
+            <p style="margin-top: 5px">CGPA: 7.89</p>
+          </div>
+          <div class="card" style="max-width: 400px; text-align: left">
+            <h3>Class XII (CBSE)</h3>
+            <p style="color: var(--primary)">Hindustani Kendriya Vidyalaya</p>
+            <p>July 2021</p>
+            <p>Score: 84.60%</p>
+          </div>
+          <div class="card" style="max-width: 400px; text-align: left">
+            <h3>Class X (SEBA)</h3>
+            <p style="color: var(--primary)">
+              St Mary's Higher Secondary School
+            </p>
+            <p>June 2019</p>
+            <p>Score: 91.20%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer
+      style="
+        padding: 40px 0;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.2);
+      "
+    >
+      <div class="container">
+        <h3>Let's Connect</h3>
+        <div class="contact-links">
+          <a
+            href="mailto:daliamukherjee667@gmail.com"
+            class="contact-icon"
+            title="Email"
+            ><i class="fa-solid fa-envelope"></i
+          ></a>
+          <a
+            href="https://www.linkedin.com/in/21dalia-mukherjee"
+            class="contact-icon"
+            title="LinkedIn"
+            ><i class="fa-brands fa-linkedin"></i
+          ></a>
+          <a href="#" class="contact-icon" title="+91 7896981966"
+            ><i class="fa-solid fa-phone"></i
+          ></a>
+        </div>
+        <p style="margin-top: 20px; font-size: 0.8rem; color: #666">
+          &copy; 2025 Dalia Mukherjee. All rights reserved.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Simple entry animation for cards
+      const observerOptions = {
+        threshold: 0.1,
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = "1";
+            entry.target.style.transform = "translateY(0)";
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll(".card").forEach((card) => {
+        card.style.opacity = "0";
+        card.style.transform = "translateY(20px)";
+        card.style.transition =
+          "opacity 0.6s ease-out, transform 0.6s ease-out";
+        observer.observe(card);
+      });
+    </script>
+  </body>
+</html>
